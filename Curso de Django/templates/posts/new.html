@@ -1,0 +1,63 @@
+<!-- Hereda de base porque tendra la misma estructura de la pagina -->
+{% extends "base.html" %}
+
+<!-- Head content para ponerle el titulo a la pagina-->
+{% block head_content %}
+<title>Create new post</title>
+{% endblock %}
+
+{% block container %}
+    <!-- Titulos -->
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-6 pt-3 pb-3" id="profile-box">
+                <h4 class="mb-4">Post a new photo!</h4>
+                <!-- form que recibira los datos. el enctype es multi... para recibir imagenes también
+                El método debe ser POST porque así se valida en la vista -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    
+                    <!-- Dos campos oculto para colocarle valor de pk al user y profile
+                     -->
+                    <input type="hidden" name="user" value="{{ user.pk}}" />
+                    <input type="hidden" name="profile" value="{{ profile.pk }}" />
+
+                    {# Website field #}
+                    <div class="form-group">
+                        <!-- Crear clase con if para que si detecta algun error coloque el valor de is_valid 
+                        como True y la vista haga lo que debe. Lo demas solo caracteristicas-->
+                        <!-- Además, se crea un if en valor que si la user coloca un valor se deje ese valor
+                        así se equivoque (o se haga redirect) y sino lo ha echo, que deje el titulo del espacio-->
+                        <input
+                            class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+                            type="text"
+                            name="title"
+                            placeholder="Title"
+                        >
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}{{ error }}{% endfor %}
+                        </div>
+                    </div>
+
+                    {# Photo field #}
+                    <div class="form-group">
+                        <label>Choose your photo:</label>
+                        <input
+                            class="form-control {% if form.photo.errors %}is-invalid{% endif %}"
+                            type="file"
+                            name="photo"
+                            placeholder="photo"
+                        >
+                        <div class="invalid-feedback">
+                            {% for error in form.photo.errors %}{{ error }}{% endfor %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mt-5">Publish!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

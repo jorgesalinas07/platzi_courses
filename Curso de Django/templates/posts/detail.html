@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+<!-- Estructura de un post individual -->
+{% block head_content %}
+    <title>Platzigram</title>
+{% endblock%}
+<!DOCTYPE html>
+{% block container %}
+    <!-- Parte reutilizable del feed -->
+    <div class="container">
+        <div class="row">
+            {% include "posts/post_card.html" %}
+        </div>
+    </div>
+
+{% endblock %}

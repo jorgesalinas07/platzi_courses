@@ -1,0 +1,25 @@
+<!-- Hereda de la base general -->
+{% extends "base.html" %}
+
+<!-- El mensaje en la cabecera en platzigram-->
+{% block head_content %}
+    <title>Platzigram</title>
+{% endblock%}
+
+{% block container %}
+    <div class="container">
+        <div class="row">
+            <!-- Para cada post recibido se crea un elemento de media donde se usa el primer "src" para la foto de perfil del usario que la creó.
+            En la clase media body va el nombre completo del usuario
+            El segundo src muestra la imagen montada por el usuario
+            En la clase "mt-1 ml-2" esta el número de likes con el titulo y la fecha de creación-->
+            {% for post in posts %}
+               <!-- Parte reutilizable del feed -->
+               {%include "posts/post_card.html"%}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'pagination.html' %}
+
+{% endblock %}

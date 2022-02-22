@@ -1,0 +1,48 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg fixed-top" id="main-navbar">
+    <div class="container">
+        <!-- Colocar url para que cuando la persona de click en el incono de instagram se carge el feed.
+        Debe llevar esa sintasis  -->
+        <a class="navbar-brand pr-5" style="border-right: 1px solid #efefef;" href="{%url 'posts:feed'%}">
+            <img src="{% static "img/instagram.png" %}" height="45" class="d-inline-block align-top"/>
+        </a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+
+
+                <!-- Crear un if para que si el usuario tiene foto de perfil, se muestre esa
+                si no tiene foto de perfil se muestra el muñeco por defecto -->
+                <li class="nav-item">
+                    <!-- Aquí se envia el link para que al seleccionar la foto del usuario, se envíe al perfil del mismo
+                    Además, de la url se le envía el argumento que debe tener la url para que tome al usuario en cuestion y pueda mostrar el usuario  -->
+                    <a href="{% url 'users:detail' request.user.username %}">
+                        {% if request.user.profile.picture %}
+                            <img src="{{ request.user.profile.picture.url }}" height="35" class="d-inline-block align-top rounded-circle"/>
+                        {% else%}
+                            <img src="{% static 'img/default-profile.png' %}" height="35" class="d-inline-block align-top rounded-circle"/>
+                        {% endif %}
+                    </a>
+                </li>
+
+                <!-- Direccionar a url "create_post" cada que user seleccione el icono de "+" -->
+                <li class="nav-item nav-icon">
+                    <a href="{% url 'posts:create' %}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </li>
+
+                <!-- Clase donde se ubica el icono de logout -->
+                <li class="nav-item nav-icon">
+                    <!-- Aquí se coloca la referencia a la pagina para hacer logout -->
+                    <!-- Se evita coloca la ubicación actual (/users/logout) porque si esta cambia, habría que corregir esto también-->
+                    <!-- Se procura mejor escribir el nombre de la url y que sea esa declaración en setting la que se encarge de la ubicación -->
+                    <a href="{% url 'users:logout'%}">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
